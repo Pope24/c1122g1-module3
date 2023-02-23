@@ -3,12 +3,12 @@ use quan_ly_ban_hang;
 create table customer (
 	c_id varchar(255) primary key,
     c_name varchar(255),
-    c_age varchar(255)
+    c_age varchar(255) not null
 );
 create table order_product (
 	o_id varchar(255) primary key,
     c_id varchar(255),
-    o_date date,
+    o_date date not null,
     o_total_price double,
     foreign key(c_id) references customer(c_id)
 );
