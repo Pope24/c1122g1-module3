@@ -14,4 +14,6 @@ CREATE TABLE `teacher` (
     name varchar(255),
     age int,
     country varchar(255)
-)
+);
+alter table class
+rename to class_of_school;

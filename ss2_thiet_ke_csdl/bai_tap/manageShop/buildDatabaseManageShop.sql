@@ -50,4 +50,3 @@ values 	("o2", "KDR", 6),
         ("o2", "GVS", 3),
         ("o3", "KDR", 3),
         ("o3", "BG", 15);
-select * from order_detail;
