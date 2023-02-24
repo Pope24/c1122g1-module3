@@ -55,9 +55,9 @@ select * from customer where not exists(select * from order_product where custom
 -- Hiển thị mã hóa đơn, ngày bán và giá tiền của từng hóa đơn (giá một hóa đơn được tính bằng tổng giá bán của từng loại mặt hàng xuất hiện trong hóa đơn.
 -- Giá bán của từng loại được tính = odQTY*pPrice)
 SET SQL_SAFE_UPDATES = 0;
-update order_product as o 
-join order_detail as od on o.o_id = od.o_id
+update order_product as op 
+join order_detail as od on op.o_id = od.o_id
 join product as p on od.p_id = p.p_id 
-set o.o_total_price = od.order_quantity * p.p_price;
+set op.o_total_price = od.order_quantity * p.p_price;
 select o_id, o_date, o_total_price from order_product;
 SET SQL_SAFE_UPDATES = 1;
