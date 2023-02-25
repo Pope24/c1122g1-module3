@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+}
+p {
+    display: inline;
+}
+.Tab4 {
+    text-indent: 50px;
+}
+.ColorBlue {
+    color: blue;
+}
+.Container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100%;
+}
+.Title {
+    width: 50%;
+    line-height: 1.6;
+    font-family: sans-serif;
+}
+.BorderMainTitle {
+    content:"";
+    width:100%;
+    height: 0.5px;
+    background-color: #727272;
+}
+.NoteMainTitle {
+    font-size: 14px;
+}
+.DetailTitle {
+    text-align: start;
+    margin-top: 20px;
+}
