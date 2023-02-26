@@ -1,7 +1,7 @@
 create database if not exists furama_resort;
 use furama_resort;
 
--- Nhan vien -------------------------------
+-- Nhan vien ---------------------------------
 create table vi_tri (
 	ma_vi_tri int auto_increment primary key,
     ten_vi_tri varchar(45)
@@ -31,7 +31,7 @@ create table nhan_vien (
     foreign key(ma_bo_phan) references bo_phan(ma_bo_phan)
 );
 
--- Khach hang ----------------------------------------
+-- Khach hang -----------------------------------------
 create table loai_khach(
 	ma_loai_khach int auto_increment primary key,
     ten_loai_khach varchar(45)
@@ -50,7 +50,7 @@ create table khach_hang (
 );
 alter table khach_hang modify ma_loai_khach int after dia_chi;
 
--- Hop dong chi tiet, dich vu di kem -----------------
+-- Hop dong chi tiet, dich vu di kem ------------------
 create table dich_vu_di_kem(
 	ma_dich_vu_di_kem int auto_increment primary key,
     ten_dich_vu_di_kem varchar(45),
@@ -68,7 +68,7 @@ create table hop_dong_chi_tiet (
 );
 alter table hop_dong_chi_tiet modify so_luong int after ma_hop_dong_chi_tiet;
 
--- Dich vu -------------------------------------------
+-- Dich vu --------------------------------------------
 create table loai_dich_vu(
 	ma_loai_dich_vu int auto_increment primary key,
     ten_loai_dich_vu varchar(45)
@@ -95,7 +95,7 @@ create table dich_vu (
 alter table dich_vu modify ma_kieu_thue int after so_tang;
 alter table dich_vu modify ma_loai_dich_vu int after ma_kieu_thue;
 
--- Hop dong chinh ----------------------------------
+-- Hop dong chinh -----------------------------------
 create table hop_dong(
 	ma_hop_dong int auto_increment primary key,
     ngay_lam_hop_dong datetime,
@@ -108,6 +108,8 @@ create table hop_dong(
     foreign key(ma_khach_hang) references khach_hang(ma_khach_hang),
     foreign key(ma_dich_vu) references dich_vu(ma_dich_vu)
 );
+
+-- ************************************ CHÈN DỮ LIỆU VÀO BẢNG *********************************************
 
 -- Chèn giá trị bảng vi_tri -------------------------
 insert into vi_tri (ten_vi_tri)
@@ -214,3 +216,33 @@ values 	(5,2,4),
         (2,1,2),
         (2,12,2);
 select * from hop_dong_chi_tiet;
+
+-- ************************************ SQL CƠ BẢN 2 - 5 *********************************************
+
+-- 2. Hiển thị tất cả nhân viên có tên bắt đầu là ký tự “H”, “T” hoặc “K” và có tối đa 15 kí tự. -----
+select * from nhan_vien as nv
+where (nv.ho_ten like "H%") or (nv.ho_ten like "T%") or (nv.ho_ten like "K%") and length(nv.ho_ten) < 15;
+
+-- 3. Hiển thị tất cả khách hàng độ tuổi từ 18 - 50 tuổi và ở “Đà Nẵng” hoặc “Quảng Trị”. ------------
+select *, date_format(from_days(datediff(now(), ngay_sinh)), '%Y') + 0 as tuoi from khach_hang
+where (date_format(from_days(datediff(now(), ngay_sinh)), '%Y') + 0 between 18 and 50) and dia_chi like '%Đà Nẵng' or dia_chi like '%Quảng Trị';
+
+-- 4. Đếm mỗi khách hàng đã từng đặt phòng bao nhiêu lần. Sắp xếp tăng dần theo số lần đặt phòng -----
+-- Chỉ đếm những khách hàng nào có Tên loại khách hàng là “Diamond”.
+select kh.ma_khach_hang, kh.ho_ten,kh.dia_chi, kh.so_dien_thoai, count(hd.ma_khach_hang) as so_lan_dat_phong
+from khach_hang kh
+join loai_khach lk on lk.ma_loai_khach = kh.ma_loai_khach and lk.ma_loai_khach = '1'
+join hop_dong hd on hd.ma_khach_hang = kh.ma_khach_hang
+group by kh.ma_khach_hang
+order by so_lan_dat_phong;
+
+-- 5. Hiển thị ma_khach_hang, ho_ten, ten_loai_khach, ------------------------------------------------
+-- ma_hop_dong, ten_dich_vu, ngay_lam_hop_dong, ngay_ket_thuc, tong_tien -----------------------------
+select kh.ma_khach_hang, kh.ho_ten, lk.ten_loai_khach, ifnull(hd.ma_hop_dong, 0) as ma_hop_dong, ifnull(dv.ten_dich_vu, 0) as ten_dich_vu, ifnull(hd.ngay_lam_hop_dong, 0) as ngay_lam_hop_dong, ifnull(hd.ngay_ket_thuc, 0) as ngay_ket_thuc, sum((ifnull(dv.chi_phi_thue, 0) + ifnull(hdct.so_luong, 0) * ifnull(dvdk.gia, 0))) as tong_tien from khach_hang as kh
+left join hop_dong as hd on kh.ma_khach_hang = hd.ma_khach_hang
+left join loai_khach as lk on lk.ma_loai_khach = kh.ma_loai_khach
+left join dich_vu as dv on dv.ma_dich_vu = hd.ma_dich_vu
+left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+left join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+group by hd.ma_hop_dong
+order by ma_khach_hang;
