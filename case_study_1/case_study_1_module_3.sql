@@ -221,7 +221,7 @@ select * from hop_dong_chi_tiet;
 
 -- 2. Hiển thị tất cả nhân viên có tên bắt đầu là ký tự “H”, “T” hoặc “K” và có tối đa 15 kí tự. -----
 select * from nhan_vien as nv
-where (nv.ho_ten like "H%") or (nv.ho_ten like "T%") or (nv.ho_ten like "K%") and length(nv.ho_ten) < 15;
+where (nv.ho_ten like "H%") or (nv.ho_ten like "T%") or (nv.ho_ten like "K%") and char_length(nv.ho_ten) < 15;
 
 -- 3. Hiển thị tất cả khách hàng độ tuổi từ 18 - 50 tuổi và ở “Đà Nẵng” hoặc “Quảng Trị”. ------------
 select *, date_format(from_days(datediff(now(), ngay_sinh)), '%Y') + 0 as tuoi from khach_hang
@@ -265,6 +265,8 @@ and ma_dich_vu in(select ma_dich_vu from hop_dong where year(ngay_lam_hop_dong) 
 
 -- 8. Hiển thị thông tin ho_ten khách hàng có trong hệ thống, với yêu cầu ho_ten không trùng nhau. ----
 select ho_ten from khach_hang having count(ho_ten) > 1;
+select ho_ten from khach_hang group by ho_ten;
+select distinct ho_ten from khach_hang;
 
 -- 9. Thống kê doanh thu theo tháng, nghĩa là  mỗi tháng trong năm 2021 có bao nhiêu kh đặt phòng -----
 select month(ngay_lam_hop_dong) as thang, count(month(ngay_lam_hop_dong)) as so_luong_khach_hang from hop_dong 
@@ -276,3 +278,40 @@ order by month(ngay_lam_hop_dong);
 select hd.ma_hop_dong, hd.ngay_lam_hop_dong, hd.ngay_ket_thuc, hd.tien_dat_coc, ifnull(sum(hdct.so_luong), 0) as so_luong_dich_vu_di_kem from hop_dong as hd
 left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
 group by hd.ma_hop_dong;
+
+-- ************************************ SQL CƠ BẢN 11 - 15 ********************************************
+
+-- 11.	Hiển thị thông tin các dịch vụ đi kèm đã được sử dụng bởi những khách hàng 
+-- có ten_loai_khach là “Diamond” và có dia_chi ở “Vinh” hoặc “Quảng Ngãi” ----------------------------
+select dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem from dich_vu_di_kem as dvdk 
+join khach_hang as kh on kh.ma_loai_khach = 1 and ( kh.dia_chi like "%Quảng Ngãi" or kh.dia_chi like "%Vinh")
+join hop_dong as hd on hd.ma_khach_hang = kh.ma_khach_hang
+join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+where dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem;
+select * from hop_dong;
+
+-- 12. Hiển thị các dịch vụ được kh đặt vào 3 tháng cuối 2020 nhưng kh khong đặt vào 6 tháng đầu 2021 --
+select hd.ma_hop_dong, nv.ho_ten, kh.ho_ten, kh.so_dien_thoai, dv.ma_dich_vu, dv.ten_dich_vu, ifnull(sum(hdct.so_luong), 0) as so_luong_dich_vu_di_kem, hd.tien_dat_coc 
+from hop_dong as hd
+left join nhan_vien as nv on nv.ma_nhan_vien = hd.ma_nhan_vien
+left join khach_hang as kh on kh.ma_khach_hang = hd.ma_khach_hang
+left join dich_vu as dv on dv.ma_dich_vu = hd.ma_dich_vu
+left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+where ((month(ngay_lam_hop_dong) between 10 and 12) and (year(ngay_lam_hop_dong) = 2020)) 
+and month(ngay_lam_hop_dong) not in((month(ngay_lam_hop_dong) between 1 and 6) and (year(ngay_lam_hop_dong) = 2021))
+group by hd.ma_hop_dong;
+
+-- 13. Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng ---
+select dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, hdct.so_luong as so_luong_lon_nhat from dich_vu_di_kem as dvdk
+join hop_dong_chi_tiet as hdct on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+where hdct.so_luong = (select max(so_luong) from hop_dong_chi_tiet)
+order by ma_dich_vu_di_kem;
+
+-- 14. Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất --------------
+select hdct.ma_hop_dong, ldv.ten_loai_dich_vu, dvdk.ten_dich_vu_di_kem, 1 as so_lan_su_dung from hop_dong_chi_tiet as hdct
+join dich_vu_di_kem as dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+join hop_dong as hd on hd.ma_hop_dong = hdct.ma_hop_dong
+join dich_vu as dv on dv.ma_dich_vu = hd.ma_dich_vu
+join loai_dich_vu as ldv on ldv.ma_loai_dich_vu = dv.ma_loai_dich_vu 
+group by hdct.ma_dich_vu_di_kem
+having count(hdct.ma_dich_vu_di_kem) = 1;
