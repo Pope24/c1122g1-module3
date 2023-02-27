@@ -246,3 +246,33 @@ left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
 left join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
 group by hd.ma_hop_dong
 order by ma_khach_hang;
+
+-- ************************************ SQL CƠ BẢN 6 - 10 *********************************************
+
+-- 6. Hiển thị các loại dịch vụ chưa từng được khách hàng thực hiện từ quý 1 của năm 2021 -------------
+-- ma_dich_vu, ten_dich_vu, dien_tich, chi_phi_thue, ten_loai_dich_vu ---------------------------------
+select dv.ma_dich_vu, dv.ten_dich_vu, dv.dien_tich, dv.chi_phi_thue, ldv.ten_loai_dich_vu from dich_vu as dv
+join loai_dich_vu as ldv on ldv.ma_loai_dich_vu = dv.ma_loai_dich_vu
+where ma_dich_vu not in (select  ma_dich_vu from hop_dong where month(ngay_lam_hop_dong) between 1 and 3)
+order by dien_tich desc;
+
+-- 7. Hiển thị loại dịch vụ đã được kh đặt phòng 2020 nhưng chưa được kh đặt phòng 2021 ---------------
+-- ma_dich_vu, ten_dich_vu, dien_tich, so_nguoi_toi_da, chi_phi_thue, ten_loai_dich_vu ----------------
+select dv.ma_dich_vu, dv.ten_dich_vu, dv.dien_tich, dv.so_nguoi_toi_da, dv.chi_phi_thue, ldv.ten_loai_dich_vu from dich_vu as dv
+join loai_dich_vu as ldv on ldv.ma_loai_dich_vu = dv.ma_loai_dich_vu
+where ma_dich_vu not in (select ma_dich_vu from hop_dong where year(ngay_lam_hop_dong) = 2021) 
+and ma_dich_vu in(select ma_dich_vu from hop_dong where year(ngay_lam_hop_dong) = 2020);
+
+-- 8. Hiển thị thông tin ho_ten khách hàng có trong hệ thống, với yêu cầu ho_ten không trùng nhau. ----
+select ho_ten from khach_hang having count(ho_ten) > 1;
+
+-- 9. Thống kê doanh thu theo tháng, nghĩa là  mỗi tháng trong năm 2021 có bao nhiêu kh đặt phòng -----
+select month(ngay_lam_hop_dong) as thang, count(month(ngay_lam_hop_dong)) as so_luong_khach_hang from hop_dong 
+where year(ngay_lam_hop_dong) = 2021
+group by month(ngay_lam_hop_dong)
+order by month(ngay_lam_hop_dong);
+
+-- 10. Hiển thị thông tin tương ứng với từng hợp đồng thì đã sử dụng bao nhiêu dịch vụ đi kèm ---------
+select hd.ma_hop_dong, hd.ngay_lam_hop_dong, hd.ngay_ket_thuc, hd.tien_dat_coc, ifnull(sum(hdct.so_luong), 0) as so_luong_dich_vu_di_kem from hop_dong as hd
+left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+group by hd.ma_hop_dong;
