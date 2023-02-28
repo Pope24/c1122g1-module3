@@ -246,7 +246,7 @@ left join dich_vu as dv on dv.ma_dich_vu = hd.ma_dich_vu
 left join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
 left join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
 group by hd.ma_hop_dong
-order by ma_khach_hang;
+order by ma_khach_hang; 
 select * from ss5;
 -- ************************************ SQL CƠ BẢN 6 - 10 *********************************************
 
@@ -335,5 +335,26 @@ select * from ss16;
 
 -- 17. Cập nhật khách hàng có ten_loai_khach Platinum -> Diamond
 -- chỉ cập nhật khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong 2021 là lớn hơn 10tr ------
-select * from khach_hang as kh
-join  loai_khach as lk on kh.ma_loai_khach = lk.ma_loai_khach and lk.ma_loai_khach = 2;
+create or replace view ss17 as
+select kh.ma_khach_hang, kh.ho_ten, 1 as loai_khach from khach_hang as kh
+join hop_dong as hd on hd.ma_khach_hang = kh.ma_khach_hang and year(hd.ngay_lam_hop_dong) = 2021
+join hop_dong_chi_tiet as hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem 
+join dich_vu as dv on hd.ma_dich_vu = dv.ma_dich_vu
+join  loai_khach as lk on kh.ma_loai_khach = lk.ma_loai_khach and lk.ma_loai_khach = 2
+having sum((ifnull(dv.chi_phi_thue, 0) + ifnull(hdct.so_luong, 0) * ifnull(dvdk.gia, 0))) > 10000000;
+select * from ss17;
+
+-- 18.	Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng) --------------
+create or replace view ss18 as 
+select ma_khach_hang, ho_ten from khach_hang where ma_khach_hang not in (select kh.ma_khach_hang from khach_hang as kh 
+join hop_dong as hd on kh.ma_khach_hang = hd.ma_khach_hang and year(hd.ngay_lam_hop_dong) < 2021); 
+select * from ss18;
+
+-- 19. Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi -------
+create or replace view ss19 as
+select dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, dvdk.gia * 2 as gia_sau_khi_tang from hop_dong as hd 
+join hop_dong_chi_tiet as hdct on hd.ma_hop_dong = hdct.ma_hop_dong and hdct.so_luong > 10
+join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+where year(hd.ngay_lam_hop_dong) = 2020;
+select * from ss19;
