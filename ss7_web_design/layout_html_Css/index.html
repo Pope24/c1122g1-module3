@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Tạo layout với các thẻ HTML5 và CSS</title>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="./styles.css" rel="stylesheet">
+    <link href="./swiper.css" rel="stylesheet">
+</head>
+<body>
+<div id="webLayout">
+    <div class="header d-flex align-items">
+        <div class="left--header d-flex align-items">
+            <li><img alt="CoreUI Logo" class="navbar-brand-full ng-star-inserted" height="30"
+                     src="https://tim.codegym.vn/assets/img/brand/logo-codegym.png"></li>
+            <li>Codegym</li>
+            <li>Home</li>
+            <li>Hệ thống</li>
+            <li>Giới thiệu</li>
+            <li>About</li>
+        </div>
+        <div class="right--header h-100 d-flex align-items">
+            <input class="input--search" placeholder="Tìm kiếm">
+            <i class="fa-solid fa-magnifying-glass icon--search"></i>
+        </div>
+    </div>
+    <div class="main">
+        <div class="slide--container">
+            <swiper-container autoplay-delay="2500" autoplay-disable-on-interaction="false" centered-slides="true"
+                              class="mySwiper" navigation="true"
+                              pagination="true" pagination-clickable="true" space-between="30">
+                <swiper-slide><img alt="" src="https://cdn.codegym.vn/wp-content/uploads/2022/06/trang-chu-2-7.jpg"
+                                   srcset="">
+                </swiper-slide>
+                <swiper-slide><img alt="" src="https://cdn.codegym.vn/wp-content/uploads/2020/04/Banner-2-min.jpg"
+                                   srcset=""></swiper-slide>
+                <swiper-slide><img alt="" src="https://i.ytimg.com/vi/pDOD7gAGM6g/maxresdefault.jpg" srcset="">
+                </swiper-slide>
+                <swiper-slide><img
+                        src="https://cdn.codegym.vn/wp-content/uploads/2022/08/TTS-GVU.jpg">
+                </swiper-slide>
+            </swiper-container>
+        </div>
+        <div class="container d-flex">
+            <div class="sidebar--container col-3">
+                <div class="elm--sidebar">
+                    <li class="d-flex align-items"><p class="mg-left-20"><i class="fa-solid fa-user mg-right-10"></i>Thông
+                        tin cá nhân</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-file-invoice mg-right-10"></i>Bài viết của tôi</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-building-columns mg-right-10"></i>Khoá học</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i class="fa-solid fa-check mg-right-10"></i>Nhiệm
+                        vụ</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-money-bill-wave mg-right-10"></i>Học phí</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-wand-sparkles mg-right-10"></i>Năng lực</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i class="fa-solid fa-marker mg-right-10"></i>Điểm
+                        thi</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i class="fa-solid fa-tag mg-right-10"></i>Coupon
+                    </p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-regular fa-calendar-days mg-right-10"></i>Điểm danh</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-file-contract mg-right-10"></i>Đơn từ</p></li>
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-handshake mg-right-10"></i>Nhập
+                        kí việc làm</p></li>
+                </div>
+                <div class="elm--more">
+                    <li class="d-flex align-items"><p class="mg-left-20"><i
+                            class="fa-solid fa-handshake mg-right-10"></i>Đăng xuất</p></li>
+                </div>
+            </div>
+            <div class="content--container col-9">
+                <div class="articles--container">
+                    <h1>Thông tin bài viết mới</h1>
+                    <section>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
+                        a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                        McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
+                        obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the
+                        word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+                        1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
+                        Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during
+                        the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a
+                        line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced
+                        below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by
+                        Cicero are also reproduced in their exact original form, accompanied by English versions from
+                        the 1914 translation by H.Rackham.
+                    </section>
+                    <section>
+                        It is a long established fact that a reader will be distracted by the readable content of a page
+                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                        distribution of letters, as opposed to using 'Content here, content here', making it look like
+                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                        their default model text, and a search for 'lorem ipsum' will uncover many web sites still in
+                        their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on
+                        purpose (injected humour and the like).There are many variations of passages of Lorem Ipsum
+                        available, but the majority have suffered alteration in some form, by injected humour, or
+                        randomised words which don't look even slightly believable. If you are going to use a passage of
+                        Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                        All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary,
+                        making this the first true generator on the Internet. It uses a dictionary of over 200 Latin
+                        words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks
+                        reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour,
+                        or non-characteristic words etc.
+                    </section>
+                    <section>
+                        McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
+                        obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the
+                        word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+                        1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
+                        Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during
+                        the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a
+                        line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced
+                        below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by
+                        Cicero are also reproduced in their exact original form, accompanied by English versions from
+                        the 1914 translation by H.Rackham.
+                        It is a long established fact that a reader will be distracted by the readable content of a page
+                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                        distribution of letters, as opposed to using 'Content here, content here', making it look like
+                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                        their default model text, and a search for 'lorem ipsum' will uncover many web sites still in
+                        their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on
+                        purpose (injected humour and the like).There are many variations of passages of Lorem Ipsum
+                        available, but the majority have suffered alteration in some form, by injected humour, or
+                        randomised words which don't look even slightly believable. If you are going to use a passage of
+                        Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                        All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary,
+                        making this the first true generator on the Internet. It uses a dictionary of over 200 Latin
+                        words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks
+                        reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour,
+                        or non-characteristic words etc.
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer mg-top-50">
+        <footer class="footer_area section_padding_130_0">
+            <div class="container">
+                <div class="row d-flex">
+                    <!-- Single Widget-->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-footer-widget section_padding_0_130">
+                            <!-- Footer Logo-->
+                            <div class="footer-logo mb-3"></div>
+                            <p>Appland is completely creative, lightweight, clean app landing page.</p>
+                            <!-- Copywrite Text-->
+                            <div class="copywrite-text mb-5">
+                                <p class="mb-0">Made with <i class="lni-heart mr-1"></i>by<a class="ml-1"
+                                                                                             href="https://wrapbootstrap.com/user/DesigningWorld">Designing
+                                    World</a></p>
+                            </div>
+                            <!-- Footer Social Area-->
+                            <div class="footer_social_area"><a data-original-title="Facebook" data-placement="top"
+                                                               data-toggle="tooltip"
+                                                               href="#" title=""><i
+                                    class="fa fa-facebook"></i></a><a data-original-title="Pinterest"
+                                                                      data-placement="top"
+                                                                      data-toggle="tooltip" href="#"
+                                                                      title=""><i
+                                    class="fa fa-pinterest"></i></a><a data-original-title="Skype" data-placement="top"
+                                                                       data-toggle="tooltip" href="#"
+                                                                       title=""><i
+                                    class="fa fa-skype"></i></a><a data-original-title="Twitter" data-placement="top"
+                                                                   data-toggle="tooltip"
+                                                                   href="#" title=""><i
+                                    class="fa fa-twitter"></i></a></div>
+                        </div>
+                    </div>
+                    <!-- Single Widget-->
+                    <div class="col-12 col-sm-6 col-lg">
+                        <div class="single-footer-widget section_padding_0_130">
+                            <!-- Widget Title-->
+                            <h5 class="widget-title">About</h5>
+                            <!-- Footer Menu-->
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Corporate Sale</a></li>
+                                    <li><a href="#">Terms &amp; Policy</a></li>
+                                    <li><a href="#">Community</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Widget-->
+                    <div class="col-12 col-sm-6 col-lg">
+                        <div class="single-footer-widget section_padding_0_130">
+                            <!-- Widget Title-->
+                            <h5 class="widget-title">Support</h5>
+                            <!-- Footer Menu-->
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Help</a></li>
+                                    <li><a href="#">Support</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Term &amp; Conditions</a></li>
+                                    <li><a href="#">Help &amp; Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Widget-->
+                    <div class="col-12 col-sm-6 col-lg">
+                        <div class="single-footer-widget section_padding_0_130">
+                            <!-- Widget Title-->
+                            <h5 class="widget-title">Contact</h5>
+                            <!-- Footer Menu-->
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Call Centre</a></li>
+                                    <li><a href="#">Email Us</a></li>
+                                    <li><a href="#">Term &amp; Conditions</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+</body>
+</html>
