@@ -358,3 +358,10 @@ join hop_dong_chi_tiet as hdct on hd.ma_hop_dong = hdct.ma_hop_dong and hdct.so_
 join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
 where year(hd.ngay_lam_hop_dong) = 2020;
 select * from ss19;
+
+-- 20.	Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống ------------------
+create view ss20 as 
+select nv.ma_nhan_vien, nv.ho_ten, nv.email, nv.so_dien_thoai, nv.ngay_sinh, nv.dia_chi from nhan_vien as nv 
+union all
+select nv.ma_nhan_vien, nv.ho_ten, nv.email, nv.so_dien_thoai, nv.ngay_sinh, nv.dia_chi from nhan_vien as nv;
+select * from ss20;
