@@ -1,18 +1,18 @@
 use quan_ly_sinh_vien;
 select * from class_of_school;
 select * from mark;
-select * from mon_hoc;
+select * from subject_class;
 select * from student;
 
 -- Hiển thị tất cả các thông tin môn học (bảng subject) có credit lớn nhất.
-select * from mon_hoc 
+select * from subject_class 
 group by mh_id 
-having avg(credit) >= all (select avg(credit) from mon_hoc);
+having avg(credit) >= all (select avg(credit) from subject_class);
 
 -- Hiển thị các thông tin môn học có điểm thi lớn nhất.
 set sql_mode='';
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
-select mh.mh_name, mh.credit, m.mark, m.exam_times from mon_hoc mh
+select mh.mh_name, mh.credit, m.mark, m.exam_times from subject_class mh
 inner join mark m on mh.mh_id = m.mh_id
 group by mh.mh_name, mh.credit
 having m.mark >= all(select mark from mark);
