@@ -303,11 +303,12 @@ and month(ngay_lam_hop_dong) not in((month(ngay_lam_hop_dong) between 1 and 6) a
 group by hd.ma_hop_dong;
 
 -- 13. Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng --
-select dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, hdct.so_luong as so_luong_lon_nhat from dich_vu_di_kem as dvdk
-join hop_dong_chi_tiet as hdct on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
-where hdct.so_luong = (select max(so_luong) from hop_dong_chi_tiet)
-order by ma_dich_vu_di_kem;
-
+set sql_mode='';
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+select hdct.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, sum(hdct.so_luong) as so_luong from hop_dong_chi_tiet as hdct 
+join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+group by hdct.ma_dich_vu_di_kem
+having sum(hdct.so_luong) = (select max(so_luong) from hop_dong_chi_tiet);
 -- 14. Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất -------------
 select hdct.ma_hop_dong, ldv.ten_loai_dich_vu, dvdk.ten_dich_vu_di_kem, 1 as so_lan_su_dung from hop_dong_chi_tiet as hdct
 join dich_vu_di_kem as dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
@@ -365,3 +366,10 @@ select nv.ma_nhan_vien, nv.ho_ten, nv.email, nv.so_dien_thoai, nv.ngay_sinh, nv.
 union all
 select nv.ma_nhan_vien, nv.ho_ten, nv.email, nv.so_dien_thoai, nv.ngay_sinh, nv.dia_chi from nhan_vien as nv;
 select * from ss20;
+
+-- ************************************ SQL NÂNG CAO *************************************************
+
+-- 21. Tạo khung nhìn có tên là v_nhan_vien để lấy được thông tin của tất cả các nhân viên -----------
+-- địa chỉ “Hải Châu” và từng lập hợp đồng cho một hoặc nhiều kh bất kì, ngày lập là “12/12/2019” ----
+select * from nhan_vien;
+select * from hop_dong;
