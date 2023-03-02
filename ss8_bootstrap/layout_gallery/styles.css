@@ -1,0 +1,19 @@
+.main .row img {
+    object-fit: cover;
+    width: 100%;
+}
+@media only screen and (max-width: 500px) {
+    .col {
+        min-width: 100%;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .col {
+        width: 50%;
+    }
+}
+@media only screen and (min-width: 701px) {
+    .col {
+        width: 25%;
+    }
+}

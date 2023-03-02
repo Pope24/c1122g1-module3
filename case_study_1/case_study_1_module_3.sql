@@ -303,8 +303,6 @@ and month(ngay_lam_hop_dong) not in((month(ngay_lam_hop_dong) between 1 and 6) a
 group by hd.ma_hop_dong;
 
 -- 13. Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng --
-set sql_mode='';
-SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 select hdct.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, sum(hdct.so_luong) as so_luong from hop_dong_chi_tiet as hdct 
 join dich_vu_di_kem as dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
 group by hdct.ma_dich_vu_di_kem
@@ -348,9 +346,10 @@ select * from ss17;
 
 -- 18.	Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng) --------------
 create or replace view ss18 as 
-select ma_khach_hang, ho_ten from khach_hang where ma_khach_hang not in (select kh.ma_khach_hang from khach_hang as kh 
+select ma_khach_hang from khach_hang where ma_khach_hang in (select kh.ma_khach_hang from khach_hang as kh 
 join hop_dong as hd on kh.ma_khach_hang = hd.ma_khach_hang and year(hd.ngay_lam_hop_dong) < 2021); 
-select * from ss18;
+delete from hop_dong as hd where hd.ma_khach_hang in (select ma_khach_hang from ss18);
+delete from khach_hang as kh where hd.ma_khach_hang in (select ma_khach_hang from ss18);
 
 -- 19. Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi -------
 create or replace view ss19 as
