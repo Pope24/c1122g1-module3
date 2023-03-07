@@ -1,0 +1,111 @@
+*,
+div,
+p {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: #000;
+    color: #fff;
+}
+
+.container {
+    min-width: 100%;
+    padding: 0;
+    background-image: linear-gradient(
+            rgba(10, 10, 10, 0.7),
+            rgba(10, 10, 10, 0.7)
+    ),
+    url(assets/images/header-image.png);
+    height: 100vh;
+    font-family: Netflix Sans, Helvetica Neue, Segoe UI, Roboto, Ubuntu,
+    sans-serif;
+}
+/* --------------------HEADER-------------------- */
+.header {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    padding: 10px 5%;
+    position: relative;
+}
+.header .logo {
+    width: 150px;
+}
+
+/* --------------------MAIN--------------------- */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main .form-login {
+    width: 450px;
+    height: 600px;
+    backdrop-filter: brightness(25%);
+    border-radius: 5px;
+    padding: 60px 68px 40px;
+}
+.form-login #login h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 28px;
+}
+#login .username,
+#login .password {
+    outline: 0;
+    color: #fff;
+    background: #333;
+    border: 0;
+    border-radius: 4px;
+    height: 50px;
+    line-height: 50px;
+    padding: 8px 20px;
+    margin-bottom: 16px;
+    line-height: 50px;
+}
+#login .submit-btn {
+    background: #e50914;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    margin: 24px 0 12px;
+    height: 50px;
+}
+#login .modified {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #b3b3b3;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 50px;
+}
+#login .modified a {
+    text-decoration: none;
+    color: #b3b3b3;
+}
+#login .modified a:hover {
+    text-decoration: underline;
+}
+#login .login-form-other p:first-child {
+    margin-bottom: 20px;
+    color: #b3b3b3;
+    font-size: 16px;
+    font-weight: 400;
+}
+#login .login-form-other p:last-child {
+    color: #b3b3b3;
+    font-size: 13px;
+    font-weight: 400;
+}
+@media only screen and (max-width: 768px) {
+    .container {
+        background: none;
+    }
+    .main .form-login {
+        background: transparent;
+        width: 100%;
+    }
+}
