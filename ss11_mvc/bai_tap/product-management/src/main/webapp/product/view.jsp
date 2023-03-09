@@ -17,23 +17,29 @@
     }
 </style>
 <body>
-    <h1>Product List</h1>
-    <a href="/products?action=create">Create new product</a>
-    <table border="1">
+<h1>Product List</h1>
+<a href="/products?action=create">Create new product</a>
+<form action="/products?action=search" method="post" style="margin: 10px">
+    <input type="text" name="nameSearch" placeholder="Enter name search">
+    <input type="submit" value="Tim kiem">
+</form>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Amount</th>
+    </tr>
+    <c:forEach items="${productList}" var="product">
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Amount</th>
+            <td><a href="/products?action=view&id=${product.getId()}">${product.getId()}</a></td>
+            <td><a href="/products?action=view&id=${product.getId()}">${product.getName()}</a></td>
+            <td>${product.getDesc()}</td>
+            <td>${product.getAmount()}</td>
+            <td style="text-align: center"><a href="/products?action=edit&id=${product.getId()}">Edit</a></td>
+            <td style="text-align: center"><a href="/products?action=delete&id=${product.getId()}">Delete</a></td>
         </tr>
-        <c:forEach items="${productList}" var="product">
-            <tr>
-                <td><a href="/products?action=view&id=${product.getId()}">${product.getId()}</a></td>
-                <td><a href="/products?action=view&id=${product.getId()}">${product.getName()}</a></td>
-                <td>${product.getDesc()}</td>
-                <td>${product.getAmount()}</td>
-            </tr>
-        </c:forEach>
-    </table>
+    </c:forEach>
+</table>
 </body>
 </html>

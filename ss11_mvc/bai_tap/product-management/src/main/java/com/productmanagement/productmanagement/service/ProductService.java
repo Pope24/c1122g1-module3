@@ -41,16 +41,19 @@ public class ProductService implements IProductService {
         for (Product product: productList) {
             if (product.getId() == id) {
                 productList.remove(product);
+                return;
             }
         }
+
     }
 
     @Override
-    public Product findProductByName(String name) {
+    public List<Product> findProductByName(String name) {
+        List<Product> products = new ArrayList<>();
         for (Product product : productList) {
-            if (product.getName().equals(name)) return product;
+            if (product.getName().equals(name)) products.add(product);
         }
-        return null;
+        return products;
     }
 
     @Override

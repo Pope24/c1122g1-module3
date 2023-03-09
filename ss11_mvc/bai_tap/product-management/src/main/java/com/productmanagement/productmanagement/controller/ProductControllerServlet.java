@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ProductControllerServlet", value = "/products")
@@ -32,7 +33,7 @@ public class ProductControllerServlet extends HttpServlet {
                 viewProduct(request, response);
                 break;
             case "delete":
-                deleteProduct(request, response);
+                showDeleteProduct(request, response);
                 break;
             default:
                 showProductList(request, response);
@@ -48,14 +49,10 @@ public class ProductControllerServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getProductById(id);
-        if (product == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(request, response);
-        } else {
+        System.out.println(product.toString());
             request.setAttribute("product", product);
             RequestDispatcher dispatcher = request.getRequestDispatcher("product/form-edit.jsp");
             dispatcher.forward(request, response);
-        }
     }
 
     private void viewProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,6 +69,13 @@ public class ProductControllerServlet extends HttpServlet {
         request.setAttribute("productList", productList);
         dispatcher.forward(request, response);
     }
+    private void showDeleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product product = productService.getProductById(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/delete.jsp");
+        request.setAttribute("product", product);
+        dispatcher.forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -85,6 +89,12 @@ public class ProductControllerServlet extends HttpServlet {
                 break;
             case "edit":
                 editProduct(request, response);
+                break;
+            case "delete":
+                deleteProduct(request, response);
+                break;
+            case "search":
+                renderSearchList(request, response);
                 break;
             default:
                 showProductList(request, response);
@@ -113,10 +123,23 @@ public class ProductControllerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/form-edit.jsp");
         dispatcher.forward(request, response);
     }
-
-    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         this.productService.deleteProduct(id);
+//        List<Product> productList = productService.getProductList();
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+//        request.setAttribute("productList", productList);
+//        dispatcher.forward(request, response);
         response.sendRedirect("/products");
+    }
+    private void renderSearchList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Product> productList = new ArrayList<>();
+        String name = request.getParameter("nameSearch");
+        for (Product product: productService.findProductByName(name)) {
+            productList.add(product);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+        request.setAttribute("productList", productList);
+        dispatcher.forward(request, response);
     }
 }

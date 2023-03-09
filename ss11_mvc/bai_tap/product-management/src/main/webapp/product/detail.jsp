@@ -13,11 +13,9 @@
 </head>
 <body>
 <a href="/products">Back to view</a>
-    <p>ID: ${requestScope["product"].getId()}</p>
-    <p>Name: ${requestScope["product"].getName()}</p>
-    <p>Description: ${requestScope["product"].getDesc()}</p>
-    <p>Amount: ${requestScope["product"].getAmount()}</p>
-    <button style="margin-right: 10px"><a href="/products?action=edit&id=${requestScope["product"].getId()}">Edit</a></button>
-    <button><a href="/products?action=delete&id=${requestScope["product"].getId()}">Delete</a></button>
+<p>ID: ${requestScope["product"].getId()}</p>
+<p>Name: ${requestScope["product"].getName()}</p>
+<p>Description: ${requestScope["product"].getDesc()}</p>
+<p>Amount: ${requestScope["product"].getAmount()}</p>
 </body>
 </html>
