@@ -348,6 +348,7 @@ select * from ss17;
 create or replace view ss18 as 
 select ma_khach_hang from khach_hang where ma_khach_hang in (select kh.ma_khach_hang from khach_hang as kh 
 join hop_dong as hd on kh.ma_khach_hang = hd.ma_khach_hang and year(hd.ngay_lam_hop_dong) < 2021); 
+delete from hop_dong_chi_tiet as hdct where hd.ma_hop_dong in (select ma_khach_hang from ss18);
 delete from hop_dong as hd where hd.ma_khach_hang in (select ma_khach_hang from ss18);
 delete from khach_hang as kh where hd.ma_khach_hang in (select ma_khach_hang from ss18);
 
