@@ -16,6 +16,7 @@ public class UserDAOImpl implements IUserDAO{
     private static final String DELETE_USER_BY_ID = "delete from users where id = ?;";
     private static final String UPDATE_USER_BY_ID = "update users set name = ?, email = ?, country = ? where id = ?;";
     private static final String SELECT_USER_BY_COUNTRY = "select * from users where country like ?;";
+    private static final String SORT_USER_BY_NAME = "select * from users order by name;";
     public UserDAOImpl() {
     }
     protected Connection getConnection() {
@@ -112,6 +113,24 @@ public class UserDAOImpl implements IUserDAO{
                 userList.add(new User(id, nameUser, email, country));
             }
             System.out.println(userList);
+            return userList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<User> sortUserByName() {
+        List<User> userList = new ArrayList<>();
+        try(Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SORT_USER_BY_NAME)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String country = resultSet.getString("country");
+                userList.add(new User(id, name, email, country));
+            }
             return userList;
         } catch (SQLException e) {
             throw new RuntimeException(e);

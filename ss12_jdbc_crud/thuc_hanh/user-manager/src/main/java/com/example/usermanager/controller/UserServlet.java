@@ -60,6 +60,9 @@ public class UserServlet extends HttpServlet {
                 case "delete":
                     deleteUser(request, response);
                     break;
+                case "sort":
+                    sortUser(request, response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -129,8 +132,13 @@ public class UserServlet extends HttpServlet {
     }
     private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String search = request.getParameter("search");
-        System.out.println(search);
         List<User> userList = userDAO.searchUserByName(search);
+        request.setAttribute("listUser", userList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
+        dispatcher.forward(request, response);
+    }
+    private void sortUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<User> userList = userDAO.sortUserByName();
         request.setAttribute("listUser", userList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         dispatcher.forward(request, response);
