@@ -63,6 +63,9 @@ public class UserServlet extends HttpServlet {
                 case "sort":
                     sortUser(request, response);
                     break;
+                case "permission":
+                    addUserPermission(request, response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -89,11 +92,11 @@ public class UserServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        User existingUser = userDAO.selectUser(id);
+//        User existingUser = userDAO.selectUser(id);
+        User existingUser = userDAO.getUserById(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
-
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
@@ -102,7 +105,8 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String country = request.getParameter("country");
         User newUser = new User(name, email, country);
-        userDAO.insertUser(newUser);
+//        userDAO.insertUser(newUser);
+        userDAO.insertIntoUser(newUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -142,5 +146,10 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("listUser", userList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         dispatcher.forward(request, response);
+    }
+    private void addUserPermission(HttpServletRequest request, HttpServletResponse response) {
+        User user = new User("quan", "quannguyen@gmail.com", "Viet Nam");
+        int[] permission = {1,2,4};
+        userDAO.addUserTransaction(user, permission);
     }
 }
